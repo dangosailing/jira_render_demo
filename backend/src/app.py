@@ -13,9 +13,9 @@ def home():
     username = os.getenv("USER", "fallbackDaniel")
     return f"Welcome to the Home page {username}!"
 
-@app.get("/api/hello")
+@app.get("/api/user")
 def hello():
-    return jsonify({"ok": True})
+    return jsonify({"name": "user"})
 
 if __name__ ==  "__main__":
         app.run(host="0.0.0.0", port=5000, debug=True)
