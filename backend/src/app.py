@@ -2,8 +2,8 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 from flask_cors import CORS
-from routes.general import general_bp
-from routes.user import user_bp
+from src.routes.general import general_bp
+from src.routes.user import user_bp
 
 load_dotenv()
 
