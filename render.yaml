@@ -10,6 +10,7 @@ services:
     name: react-frontend
     env: docker
     plan: free
+    region: frankfurt
     rootDir: frontend
     envVars:
       - key: VITE_BACKEND_URL
