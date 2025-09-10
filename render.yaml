@@ -5,7 +5,6 @@ services:
     plan: free
     region: frankfurt
     rootDir: backend
-    # No need for buildCommand/startCommand, Dockerfile handles it
 
   - type: web
     name: react-frontend
