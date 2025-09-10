@@ -1,27 +1,20 @@
 services:
   - type: web
     name: flask-backend
-    runtime: python
+    env: docker
     plan: free
     region: frankfurt
     rootDir: backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn -w 2 -k gthread -b 0.0.0.0:$PORT src.app:app
-    healthCheckPath: /
+    # No need for buildCommand/startCommand, Dockerfile handles it
 
   - type: web
     name: react-frontend
-    runtime: static
+    env: docker
+    plan: free
     rootDir: frontend
-    buildCommand: npm ci && npm run build
-    staticPublishPath: dist
-    routes:
-      - type: rewrite
-        source: "/*"
-        destination: "/index.html"
     envVars:
       - key: VITE_BACKEND_URL
         fromService:
-          name: flask-backend                #matches the backend service name above
+          name: flask-backend
           type: web
-          envVarKey: RENDER_EXTERNAL_URL     #pulls the existing BE url dynamically
+          envVarKey: RENDER_EXTERNAL_URL
