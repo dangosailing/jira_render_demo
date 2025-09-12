@@ -4,7 +4,7 @@ export default function App() {
   const [data, setData] = useState([{}]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL || ""}/api/user`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
