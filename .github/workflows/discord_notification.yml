@@ -1,0 +1,35 @@
+name: Discord Notify
+
+on:
+    push:
+        branches: ["main", "dev"]
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+    notify:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Build message
+              id: msg
+              run: |
+                  # Create a compact JSON payload for Discord
+                  # Using a here-doc so we don't fight with YAML quoting
+                  cat > payload.json <<'JSON'
+                  {
+                    "content": null,
+                    "embeds": [{
+                      "title": "🚀 CI ran for ${{ github.repository }}",
+                      "description": "Ref: **${{ github.ref }}**\nCommit: `${{ github.sha }}`\nActor: **${{ github.actor }}**",
+                      "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                      "color": 5814783
+                    }]
+                  }
+                  JSON
+                  echo "Payload built"
+            - name: Send to Discord
+              run: |
+                  curl -sS -X POST \
+                    -H "Content-Type: application/json" \
+                    -d @payload.json \
+                    "${{ secrets.DISCORD_WEBHOOK }}"
